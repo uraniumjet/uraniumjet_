@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block title %}Hostel Meals system | {{ site.name }}{% endblock %}
+{% block description %}Hostel Meals records every meal, tracks exit permits and produces reports for the central office. Open the live demo.{% endblock %}
+{% block content %}
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="crumbs"><a href="{{ url_for('products') }}">Products</a> / Hostel Meals</p>
+    <h1>{{ hostel.name }}</h1>
+    <p class="lead">{{ hostel.headline }}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href="{{ site.demo_url }}" target="_blank" rel="noopener">Try the live demo</a>
+      {{ m.wa_button("Hello Uranium Jet, I would like to know more about the Hostel Meals system.", "Ask about Hostel Meals") }}
+    </div>
+    <p class="fineprint">{% if site.demo_hint %}{{ site.demo_hint }} {% endif %}The demo uses sample data and can take about a minute to wake up the first time you open it.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap feature-grid">
+    <div>
+      <p class="lead lead--dark">{{ hostel.summary }}</p>
+      <dl class="defs">
+        {% for f in hostel.features %}
+        <div class="def">
+          <dt>{{ f.title }}</dt>
+          <dd>{{ f.text }}</dd>
+        </div>
+        {% endfor %}
+      </dl>
+    </div>
+    <div>{% include "_proof.html" %}</div>
+  </div>
+</section>
+
+<section class="cta" aria-labelledby="cta-title">
+  <div class="wrap cta-grid">
+    <div>
+      <h2 id="cta-title">Want it set up for your hostel or institution?</h2>
+      <p>Tell us how many residents you serve and how meals work today. We will tell you what fits and what would need changing.</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn--primary" href="{{ url_for('contact') }}?topic=hostel-meals">Send a message</a>
+      {{ m.wa_button("Hello Uranium Jet, I would like to set up the Hostel Meals system.") }}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

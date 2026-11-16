@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block title %}Services | {{ site.name }}{% endblock %}
+{% block description %}Software and web development, IT support, printing and design, and cyber café services from Uranium Jet Digital Solution in Kano.{% endblock %}
+{% block content %}
+
+<section class="page-head">
+  <div class="wrap">
+    <h1>Services</h1>
+    <p class="lead">Software for your organisation, and everyday IT, print and internet services under the same roof.</p>
+  </div>
+</section>
+
+{% set topic_for = {"software": "software", "it-support": "it-support", "print-design": "print-design", "cyber-cafe": "other"} %}
+<section class="section section--tight">
+  <div class="wrap">
+    {% for g in groups %}
+    <article class="service" id="{{ g.id }}">
+      <div class="service-head">
+        <h2>{{ g.title }}</h2>
+        <p>{{ g.summary }}</p>
+      </div>
+      <div>
+        <ul class="bullets">
+          {% for item in g.points %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+        <p><a class="text-link" href="{{ url_for('contact') }}?topic={{ topic_for[g.id] }}">Ask about {{ g.title|lower }}</a></p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="cta" aria-labelledby="cta-title">
+  <div class="wrap cta-grid">
+    <div>
+      <h2 id="cta-title">Not sure which service you need?</h2>
+      <p>Describe the problem in your own words. We will tell you if we can help.</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn--primary" href="{{ url_for('contact') }}">Send a message</a>
+      {{ m.wa_button() }}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+# Render Blueprint for the company site. Create it with: New > Blueprint > pick this repo.
+services:
+  - type: web
+    name: uraniumjet-site
+    runtime: python
+    plan: starter          # always on; the free plan sleeps after 15 minutes without traffic
+    region: frankfurt      # closest Render region to Nigeria
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn wsgi:app --workers 2 --threads 2 --timeout 30 --access-logfile -
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5          # change to a Python version Render lists as supported
+      - key: SECRET_KEY
+        generateValue: true
+      - key: TRUST_PROXY
+        value: "1"
+      - key: SITE_URL
+        sync: false            # for example https://www.yourdomain.com
+      - key: MAIL_BACKEND
+        value: resend
+      - key: RESEND_API_KEY
+        sync: false
+      - key: MAIL_FROM
+        sync: false            # for example Uranium Jet Website <contact@yourdomain.com>
+      - key: MAIL_TO
+        value: uraniumjetdigitalsolution@gmail.com

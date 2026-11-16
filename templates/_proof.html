@@ -1,0 +1,29 @@
+{% import "_macros.html" as m with context %}<figure class="proof">
+  <span class="cm cm--tl" aria-hidden="true"></span>
+  <span class="cm cm--tr" aria-hidden="true"></span>
+  <span class="cm cm--bl" aria-hidden="true"></span>
+  <span class="cm cm--br" aria-hidden="true"></span>
+  <span class="reg" aria-hidden="true"></span>
+
+  <div class="sheet" role="img" aria-label="Illustration of the Hostel Meals screen showing today's meal counts and three students, using sample data">
+    <div class="sheet-bar">
+      <span class="sheet-title">Hostel Meals</span>
+      <span class="sheet-tag">Sample data</span>
+    </div>
+    <div class="sheet-body" aria-hidden="true">
+      <p class="sheet-h">Today's meals</p>
+      <ul class="meals">
+        <li><span class="meals-name">Breakfast</span><span class="meter"><i class="w-86"></i></span><b>412 of 480</b></li>
+        <li><span class="meals-name">Lunch</span><span class="meter"><i class="w-75"></i></span><b>358 of 480</b></li>
+        <li><span class="meals-name">Dinner</span><span class="meter"><i class="w-0"></i></span><b>Not started</b></li>
+      </ul>
+      <p class="sheet-h">At the counter</p>
+      <ul class="who">
+        <li><span class="av">AM</span><span class="who-name">A. Musa</span><em class="chip chip--ok">Lunch collected</em></li>
+        <li><span class="av">FB</span><span class="who-name">F. Bello</span><em class="chip chip--leave">On leave, 4 days left</em></li>
+        <li><span class="av">IY</span><span class="who-name">I. Yakubu</span><em class="chip chip--warn">Absent</em></li>
+      </ul>
+    </div>
+  </div>
+  {{ m.color_bar() }}
+</figure>

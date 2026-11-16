@@ -1,0 +1,21 @@
+{% macro logo() -%}
+<svg class="logo" viewBox="0 0 40 40" width="40" height="40" role="img" aria-label="Uranium Jet logo" focusable="false">
+  <polygon points="20,1.5 37.5,10.75 37.5,29.25 20,38.5 2.5,29.25 2.5,10.75" fill="#F26A1B"/>
+  <text x="20" y="25" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff" font-family="Arial, Helvetica, sans-serif">UDS</text>
+</svg>
+{%- endmacro %}
+
+{% macro wa_icon() -%}
+<svg class="wa-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+  <path d="M12 2.5a9.5 9.5 0 0 0-8.1 14.4L2.6 21.5l4.7-1.2A9.5 9.5 0 1 0 12 2.5z" fill="currentColor"/>
+  <path d="M8.6 7.9c.2 3.1 4.2 7.1 7.4 7.3l1.4-1.4-2-1-.9.8c-1-.4-2.3-1.7-2.7-2.7l.8-.9-1-2z" fill="#25D366"/>
+</svg>
+{%- endmacro %}
+
+{% macro color_bar() -%}
+<div class="cbar" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+{%- endmacro %}
+
+{% macro wa_button(text=None, label="Chat on WhatsApp", extra="") -%}
+<a class="btn btn--wa {{ extra }}" href="{{ whatsapp_url(text) }}" target="_blank" rel="noopener">{{ wa_icon() }}<span>{{ label }}</span></a>
+{%- endmacro %}

@@ -1,0 +1,90 @@
+{% import "_macros.html" as m with context %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site.name }} | {{ site.tagline }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+  <meta name="theme-color" content="#101A2E">
+  {% block canonical %}<link rel="canonical" href="{{ absolute(current_endpoint) }}">{% endblock %}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:title" content="{{ self.title() }}">
+  <meta property="og:description" content="{{ self.description() }}">
+  <meta property="og:image" content="{{ absolute('static', filename='img/og.png') }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="{{ asset('img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+  <script type="application/ld+json">{{ {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": site.name,
+    "url": absolute('home'),
+    "email": site.email,
+    "telephone": site.phones[0].intl,
+    "address": {"@type": "PostalAddress", "streetAddress": site.address_lines[0] ~ ", " ~ site.address_lines[1], "addressLocality": "Kano", "addressCountry": "NG"}
+  } | tojson }}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="{{ url_for('home') }}" aria-label="{{ site.name }}, home">
+        {{ m.logo() }}
+        <span class="brand-text"><span class="brand-name">{{ site.short }}</span><span class="brand-sub">Digital Solution</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+      <nav id="primary-nav" class="nav" aria-label="Main">
+        <ul>
+          {% for key, label in nav %}
+          <li><a href="{{ url_for(key) }}"{% if current_endpoint == key or (key == 'products' and current_endpoint == 'product_hostel') %} aria-current="page"{% endif %}>{{ label }}</a></li>
+          {% endfor %}
+        </ul>
+        <a class="btn btn--ink btn--sm" href="{{ url_for('contact') }}">Talk to us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <a class="brand brand--light" href="{{ url_for('home') }}" aria-label="{{ site.name }}, home">
+          {{ m.logo() }}
+          <span class="brand-text"><span class="brand-name">{{ site.short }}</span><span class="brand-sub">Digital Solution</span></span>
+        </a>
+        <p class="footer-tag">{{ site.tagline }}</p>
+      </div>
+      <div>
+        <h2 class="footer-h">Explore</h2>
+        <ul class="footer-list">
+          {% for key, label in nav %}<li><a href="{{ url_for(key) }}">{{ label }}</a></li>{% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-h">Contact</h2>
+        <ul class="footer-list">
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          {% for p in site.phones %}<li><a href="tel:{{ p.intl }}">{{ p.display }}</a></li>{% endfor %}
+          <li><a href="{{ whatsapp_url() }}" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li class="footer-address">{{ site.address_lines | join(", ") }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-base">
+      {{ m.color_bar() }}
+      <p>&copy; {{ year }} {{ site.name }}. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="{{ whatsapp_url() }}" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+    {{ m.wa_icon() }}<span class="wa-float-text">WhatsApp</span>
+  </a>
+
+  <script src="{{ asset('js/site.js') }}" defer></script>
+</body>
+</html>
