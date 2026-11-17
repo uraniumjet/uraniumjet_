@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Services | {{ site.name }}{% endblock %}
+{% block description %}Software and web development, IT support, printing and design, and internet services from Uranium Jet Digital Solution in Kano.{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <h1>Services</h1>
+    <p class="lead">Software for your organisation, and everyday IT, print and internet services under one roof.</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap">
+    {% for g in groups %}
+    <article class="service" id="{{ g.id }}">
+      <div class="service-head">
+        <h2>{{ g.title }}</h2>
+        <p>{{ g.summary }}</p>
+      </div>
+      <div>
+        <ul class="bullets">{% for item in g.points %}<li>{{ item }}</li>{% endfor %}</ul>
+        <p><a class="text-link" href="{% url 'contact' %}?topic={{ g.topic }}">Ask about {{ g.title|lower }}</a></p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% include "web/_cta.html" with cta_title="Not sure which service you need?" cta_text="Describe the problem in your own words. We will tell you whether we can help." %}
+{% endblock %}

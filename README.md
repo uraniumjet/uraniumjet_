@@ -1,68 +1,52 @@
 # Uranium Jet Digital Solution: company website
 
-Flask (Python) site with a working contact form and WhatsApp buttons. No database, no JavaScript framework, no build step.
+Django 5.2 (Python). Server-rendered pages, hand-written CSS, no JavaScript framework, no build step.
+Contact enquiries are saved in the database first, then emailed.
 
 ## Run it on your computer
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements-dev.txt
-export FLASK_DEBUG=1 SECRET_KEY=dev MAIL_BACKEND=console
-flask --app wsgi run          # http://127.0.0.1:5000
-pytest                        # 38 tests
+python3 -m venv .venv
+source .venv/bin/activate            # Windows PowerShell: .venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+export DJANGO_DEBUG=1                # Windows PowerShell: $env:DJANGO_DEBUG="1"
+python manage.py makemigrations web  # first time only; creates web/migrations/0001_initial.py
+python manage.py migrate
+python manage.py test                # all tests should pass
+python manage.py createsuperuser     # your admin login
+python manage.py runserver           # http://127.0.0.1:8000
 ```
 
-With `MAIL_BACKEND=console`, contact-form messages are printed in the terminal instead of emailed.
+Admin (enquiries): http://127.0.0.1:8000/admin/
 
-## Edit the content
+With the default `MAIL_BACKEND=console`, enquiry emails are printed in the terminal.
 
-Everything you will want to change is in **`content.py`**: phone numbers, WhatsApp number, address, services, product text, the four work steps, team and values. Team photos are in `static/img/`.
+## Where things are
 
-Check these before launch (marked `CHECK` in `content.py`):
-- **Phone numbers.** The old site listed `0814547724` (only 10 digits, so probably a typo) and the flyer listed `08087314361`. The new site uses `09034097508` and `08087314361`. Confirm both, and confirm which one WhatsApp should go to.
-- **Address and email** were copied from your old site and flyer.
-- **Team bios** are short and written from what I know of you and Engr. Ahmad. Edit them freely.
-- **Hostel Meals text** describes what you told me about the system. Remove anything you do not want to promise to clients.
-
-## Pages
-
-| URL | Purpose |
+| Path | What it holds |
 |---|---|
-| `/` | Offer, live demo, services, product, process, team, contact prompts |
-| `/products` | Hostel Meals with demo link, plus two planned products marked "In planning" |
-| `/products/hostel-meals` | Feature list, demo link, WhatsApp enquiry |
-| `/services` | Software and web, IT support, print and design, cyber café |
-| `/how-we-work` | Four steps, with what you need from the client at each |
-| `/team` | Leadership, mission, vision, values |
-| `/contact` | Working form, WhatsApp, phone, email, address and map link |
+| `web/content.py` | All words, phone numbers, address, CAC number, hours. Edit here. |
+| `web/templates/web/` | One template per page |
+| `templates/base.html` | Header, footer, SEO tags |
+| `static/css/site.css` | The whole design (colour tokens at the top) |
+| `static/img/` | Team photos, icon, share image |
+| `web/models.py`, `forms.py`, `views.py`, `mail.py` | Enquiry storage, spam protection, email |
+| `web/tests.py` | Automated tests |
+| `render.yaml` | Hosting set-up for Render |
 
-## Deploy on Render (recommended)
+## Before launch (marked CHECK in `web/content.py`)
 
-1. Put this folder in a GitHub repository (a new one, or replace the contents of `uraniumjet/uraniumjet_`; GitHub Pages cannot run Python, so turn Pages off for that repo).
-2. In Render: **New > Blueprint**, choose the repository. `render.yaml` sets up the service on the Starter plan.
-3. Set the secret values Render asks for:
-   - `SITE_URL`: your final address, for example `https://www.yourdomain.com`
-   - `RESEND_API_KEY` and `MAIL_FROM` (see "Email" below)
-4. Add your domain under the service's **Settings > Custom Domains** and create the DNS records Render shows.
-5. Open `/contact`, send yourself a test message, and click the WhatsApp button.
+CAC number, opening hours, address wording, retention period quoted in the privacy notice, a real screenshot of Hostel Meals, and a lawyer's look at the privacy notice.
 
-`SECRET_KEY` is generated for you. The site refuses to start without one in production.
+## Deploy on Render
 
-## Email for the contact form
+1. Push to GitHub. In Render choose New > Blueprint and pick the repository.
+2. Fill the values Render asks for: `SITE_URL`, `DJANGO_ALLOWED_HOSTS`, `ADMIN_URL` (a path only you know), `RESEND_API_KEY`, `MAIL_FROM`.
+3. Create the admin user once from the Render shell: `python manage.py createsuperuser`.
+4. Add your domain in Render, then send a test enquiry and check it arrives.
 
-The form sends through the Resend HTTPS API (works on any host). Setup:
-1. Create a Resend account, add your domain, and add the DNS records it shows.
-2. Create an API key. Set `RESEND_API_KEY`, and `MAIL_FROM` such as `Uranium Jet Website <contact@yourdomain.com>`.
-3. `MAIL_TO` is where messages arrive (default: your Gmail). Replying to a message goes to the visitor, because their address is set as Reply-To.
+The database is a SQLite file on the persistent disk (`/var/data`). Run one instance only. Delete old enquiries with `python manage.py purge_enquiries` (add `--dry-run` to preview).
 
-Without a verified domain Resend can only send test mail to your own account, so do step 1 before launch. As an alternative that needs no domain, set `MAIL_BACKEND=smtp` with a Gmail app password (`SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=587`).
+## Not included yet
 
-If mail is not configured or fails, visitors see a clear message pointing them to WhatsApp, and nothing is silently lost.
-
-## Spam and safety built into the form
-
-Hidden honeypot field, per-visit token, minimum fill time, 5 messages per 10 minutes per address, input length limits, and header-injection protection. The site also sends strict security headers (no inline scripts or styles are used, so the Content Security Policy can stay tight). The rate limiter keeps counts per server process, which is fine for a single small instance.
-
-## Costs
-
-See the table in the chat summary. Prices were taken from third-party summaries dated October 2026 because the providers' own pricing pages could not be fetched; confirm them on the provider pages before paying.
+Two-factor login for the admin, self-hosted web font, analytics, Hausa pages, CMS (Wagtail). See the study document.

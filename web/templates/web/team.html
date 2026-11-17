@@ -1,34 +1,27 @@
 {% extends "base.html" %}
-{% import "_macros.html" as m with context %}
+{% load static %}
 {% block title %}Team and company | {{ site.name }}{% endblock %}
 {% block description %}Who runs Uranium Jet Digital Solution, what we aim to do and the values we work by.{% endblock %}
 {% block content %}
-
 <section class="page-head">
   <div class="wrap">
     <h1>Team and company</h1>
-    <p class="lead">{{ site.name }} started as a print and cyber café business in Kano. We now also build software, beginning with systems for hostels and institutions, and the counter stays open.</p>
+    <p class="lead">{{ site.name }} started as a print and internet counter in Kano. We now also build software, beginning with systems for hostels and institutions, and the counter stays open.</p>
   </div>
 </section>
-
 <section class="section section--tight" aria-labelledby="people-title">
   <div class="wrap">
     <h2 id="people-title" class="section-title">Leadership</h2>
     <ul class="people people--large">
       {% for p in team %}
       <li class="person">
-        <img class="portrait portrait--large" src="{{ asset(p.photo) }}" alt="{{ p.alt }}" width="240" height="240" loading="lazy">
-        <div>
-          <h3>{{ p.name }}</h3>
-          <p class="role">{{ p.role }}</p>
-          <p>{{ p.bio }}</p>
-        </div>
+        <img class="portrait portrait--large" src="{% static p.photo %}" alt="Portrait of {{ p.name }}" width="240" height="240" loading="lazy">
+        <div><h3>{{ p.name }}</h3><p class="role">{{ p.role }}</p><p>{{ p.bio }}</p></div>
       </li>
       {% endfor %}
     </ul>
   </div>
 </section>
-
 <section class="section section--wash" aria-labelledby="mission-title">
   <div class="wrap two-col">
     <div>
@@ -40,25 +33,10 @@
     <div>
       <h2 class="section-title">Values</h2>
       <dl class="defs">
-        {% for name, text in values %}
-        <div class="def"><dt>{{ name }}</dt><dd>{{ text }}</dd></div>
-        {% endfor %}
+        {% for name, text in values %}<div class="def"><dt>{{ name }}</dt><dd>{{ text }}</dd></div>{% endfor %}
       </dl>
     </div>
   </div>
 </section>
-
-<section class="cta" aria-labelledby="cta-title">
-  <div class="wrap cta-grid">
-    <div>
-      <h2 id="cta-title">Come and talk to us.</h2>
-      <p>Message us, call us, or visit the counter in Kano.</p>
-    </div>
-    <div class="actions">
-      <a class="btn btn--primary" href="{{ url_for('contact') }}">Contact us</a>
-      {{ m.wa_button() }}
-    </div>
-  </div>
-</section>
-
+{% include "web/_cta.html" with cta_title="Come and talk to us." cta_text="Message us, call us, or visit the counter in Kano." %}
 {% endblock %}

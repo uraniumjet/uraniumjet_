@@ -1,0 +1,12 @@
+<section class="cta" aria-labelledby="cta-title">
+  <div class="wrap cta-grid">
+    <div>
+      <h2 id="cta-title">{% firstof cta_title "Tell us what you need." %}</h2>
+      <p>{% firstof cta_text "Send a message or chat with us on WhatsApp. One of the founders reads every enquiry and replies, usually within one working day." %}</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn--primary" href="{% url 'contact' %}">Send an enquiry</a>
+      <a class="btn btn--light" href="{{ whatsapp_url }}" rel="noopener">Message us on WhatsApp</a>
+    </div>
+  </div>
+</section>

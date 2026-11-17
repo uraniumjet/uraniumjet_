@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}How we work | {{ site.name }}{% endblock %}
+{% block description %}The four steps Uranium Jet Digital Solution follows on every project: listen, scope, build in small releases, and hand over with support.{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <h1>How we work</h1>
+    <p class="lead">Every project follows the same four steps. You know what happens next, and what we need from you at each stage.</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap">
+    <ol class="process">
+      {% for s in steps %}
+      <li>
+        <h2>{{ s.title }}</h2>
+        <p>{{ s.long }}</p>
+        <p class="need"><strong>What we need from you:</strong> {{ s.you }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+{% include "web/_cta.html" with cta_title="Ready for step one?" cta_text="Tell us about your organisation and how work happens today." %}
+{% endblock %}

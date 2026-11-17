@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Hostel Meals | {{ site.name }}{% endblock %}
+{% block description %}Hostel Meals records every meal for every resident, tracks exit permits and produces reports for the central office. Try the live demo.{% endblock %}
+{% block main_attrs %} data-wake="{{ site.demo_url }}"{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="crumb"><a href="{% url 'products' %}">Products</a></p>
+    <h1>{{ product.name }}</h1>
+    <p class="lead">{{ product.headline }} {{ product.summary }}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href="{{ site.demo_url }}" rel="noopener" target="_blank">Try the live demo<span class="visually-hidden"> (opens in a new tab)</span></a>
+      <a class="btn btn--ghost" href="{% url 'contact' %}?topic=hostel-meals">Ask about Hostel Meals</a>
+    </div>
+    <p class="note">The demo uses sample data. If it takes about a minute to open, it is waking up: please wait.</p>
+  </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="features-title">
+  <div class="wrap">
+    <h2 id="features-title" class="section-title">What it does</h2>
+    <ul class="feature-grid">
+      {% for f in product.features %}
+      <li><h3>{{ f.title }}</h3><p>{{ f.text }}</p></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% include "web/_cta.html" with cta_title="Want it at your hostel?" cta_text="Tell us how many residents you have and how meals are served today. We will say whether Hostel Meals fits." %}
+{% endblock %}

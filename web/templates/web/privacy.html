@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Privacy notice | {{ site.name }}{% endblock %}
+{% block description %}How Uranium Jet Digital Solution handles the details you send through this website.{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap narrow">
+    <h1>Privacy notice</h1>
+    <p class="lead">Last updated {{ site.privacy_updated }}. This notice explains what {{ site.name }} collects through this website and what we do with it.</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap narrow prose">
+    <h2>What we collect</h2>
+    <p>When you use the contact form we collect your name, email address, topic and message, and your phone number if you choose to give it. We also keep a scrambled form of your network address (it cannot be turned back into the address) and use it only to limit spam. We do not use advertising or tracking cookies. A short-lived technical cookie keeps the form secure.</p>
+    <h2>Why we collect it</h2>
+    <p>To read your enquiry and reply to you. We do not sell your details or use them for unrelated marketing.</p>
+    <h2>Who sees it</h2>
+    <p>The founders of {{ site.name }}. Your message is stored on our hosting provider's servers and an email notification is sent through our email provider so that we receive it.</p>
+    <h2>How long we keep it</h2>
+    <p>We keep enquiries for {{ site.retention_months }} months, then delete them.</p>
+    <h2>Your choices</h2>
+    <p>You can ask us to show you, correct or delete the details we hold about you. Email <a href="mailto:{{ site.email }}">{{ site.email }}</a> or message us on <a href="{{ whatsapp_url }}" rel="noopener">WhatsApp</a>.</p>
+  </div>
+</section>
+{% endblock %}

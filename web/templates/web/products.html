@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Products | {{ site.name }}{% endblock %}
+{% block description %}Hostel Meals, the meal management system from Uranium Jet Digital Solution, with a live demo you can try now. More products are in planning.{% endblock %}
+{% block main_attrs %} data-wake="{{ site.demo_url }}"{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <h1>Products</h1>
+    <p class="lead">Systems we have built and run ourselves, so you can see how we work before you commit.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap two-col">
+    <div>
+      <h2 class="section-title">{{ product.name }}</h2>
+      <p class="strong">{{ product.headline }}</p>
+      <p>{{ product.summary }}</p>
+      <div class="actions">
+        <a class="btn btn--primary" href="{{ site.demo_url }}" rel="noopener" target="_blank">Try the live demo<span class="visually-hidden"> (opens in a new tab)</span></a>
+        <a class="btn btn--ghost" href="{% url 'hostel_meals' %}">See features</a>
+      </div>
+      <p class="note">The demo uses sample data. If it takes about a minute to open, it is waking up: please wait.</p>
+    </div>
+    <div>
+      <h2 class="section-title">In planning</h2>
+      <p>These are not available yet. Tell us if you would use one.</p>
+      <ul class="feature-list">
+        {% for p in planned %}<li><strong>{{ p.name }}</strong><span>{{ p.text }}</span></li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+{% include "web/_cta.html" %}
+{% endblock %}

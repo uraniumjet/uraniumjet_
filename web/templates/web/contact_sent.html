@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Message received | {{ site.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap narrow">
+    <h1>Thank you. We have your message.</h1>
+    <p class="lead">One of the founders will read it and reply by email, usually within one working day. If it cannot wait, message us on WhatsApp.</p>
+    <div class="actions">
+      <a class="btn btn--primary" href="{{ whatsapp_url }}" rel="noopener">Message us on WhatsApp</a>
+      <a class="btn btn--ghost" href="{% url 'home' %}">Back to the home page</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
